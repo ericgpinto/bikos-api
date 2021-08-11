@@ -21,6 +21,19 @@ module.exports = {
         } catch (error) {
             return res.status(400).send({error: 'Registration failed'});
         }
+    },
+
+    async findById(req, res){
+        const userId = req.params.userId
+
+        try {
+            const user = await User.findOne({ _id: userId })
+
+            return res.send({ user });
+
+        } catch (error) {
+            return res.status(500).send({ message: 'Failed to load user' });
+        }
     }
 
 }
