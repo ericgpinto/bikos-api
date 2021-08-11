@@ -1,6 +1,6 @@
 const express = require('express');
-
 const User = require('../model/User');
+const tokenUtil = require('../util/token')
 
 module.exports = {
 
@@ -16,7 +16,7 @@ module.exports = {
             const user = await User.create(req.body);
             user.password = undefined;
 
-            return res.send(user)
+            return res.send({ user, token: tokenUtil.generateToken({ id: user.id })})
 
         } catch (error) {
             return res.status(400).send({error: 'Registration failed'});
