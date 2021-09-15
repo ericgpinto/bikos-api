@@ -34,9 +34,19 @@ const AdSchema = mongoose.Schema({
         ]
     },
 
-    address:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Address'
+    city:{
+        type: String,
+        required: true
+    },
+    
+    neighborhood:{
+        type: String,
+        required: true
+    },
+
+    state:{
+        type: String,
+        required: true
     },
 
     createdAt: {

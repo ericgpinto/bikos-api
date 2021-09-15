@@ -1,5 +1,4 @@
 const Ad = require('../model/Ad');
-const Address = require('../model/Address');
 const User = require('../model/User');
 
 module.exports = {
@@ -14,21 +13,19 @@ module.exports = {
             description,
             period,
             category,
-            address
+            city,
+            neighborhood,
+            state
         } = req.body;
-
-        const end = address
-        console.log(end)
-
-        const test = await Address.findOne({ _id: end})
-        console.log(test)
 
         const ad = await Ad.create({
             description,
             period,
             announcer,
             category,
-            test
+            city,
+            neighborhood,
+            state
         })
 
         return res.send(ad)
