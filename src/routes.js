@@ -9,4 +9,7 @@ router.get('/users/:userId', middleware, UserController.findById)
 router.post('/users/register', UserController.register);
 router.post('/login', AuthController.login);
 
+//register of
+//list of ads
+
 module.exports = router
