@@ -12,6 +12,6 @@ router.post('/login', AuthController.login);
 
 //register of
 router.post('/ads/new/:userId', middleware, AdController.create)
-//list of ads
+router.get('/ads/feed', AdController.find)
 
 module.exports = router

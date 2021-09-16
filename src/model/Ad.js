@@ -22,6 +22,11 @@ const AdSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
+    
+    provider:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
 
     category:{
         type: String,
