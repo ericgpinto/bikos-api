@@ -25,7 +25,12 @@ module.exports = {
     }, 
 
     find: async(req, res) => {
-        const ads = await Ad.find().populate('announcer')
+
+        const count = await Ad.estimatedDocumentCount()
+        console.log(count)
+
+        const ads = await Ad.find().populate('announcer')   
+
         return res.send(ads)
     }
 }
