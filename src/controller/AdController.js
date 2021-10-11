@@ -1,5 +1,7 @@
 const Ad = require('../model/Ad');
 const User = require('../model/User');
+const Category = require('../model/Category');
+const ActionArea = require('../model/ActionArea');
 
 module.exports = {
 
@@ -9,27 +11,50 @@ module.exports = {
 
         const announcer = await User.findOne({ _id: userId })
         
-        const { description, period, category, city, neighborhood, state} = req.body;
+        const { 
+            categoryId,
+            description, 
+            available,
+            period,  
+            city, 
+            neighborhood, 
+            state,
+        } = req.body;
+
+
+        const category = await Category.findOne({ categoryId})
+        console.log(category)
 
         const ad = await Ad.create({
+            category,
             description,
+            available,
             period,
             announcer,
-            category,
             city,
             neighborhood,
             state
         })
 
-        return res.send(ad)
-    }, 
+        return res.status(201).send(ad)
+    },
+
 
     find: async(req, res) => {
 
         const count = await Ad.estimatedDocumentCount()
         console.log(count)
 
-        const ads = await Ad.find().populate('announcer')   
+        const ads = await Ad.find()
+                    .populate('announcer')
+                    .populate({
+                        path:'category',
+                        populate: {
+                            path:'actionArea',
+                            model:'ActionArea'
+                        }
+                    })
+                    .where('available').equals(true)
 
         return res.send(ads)
     }

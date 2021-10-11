@@ -3,9 +3,19 @@ const { Schema } = require('mongoose');
 
 const AdSchema = mongoose.Schema({
 
+    category:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'Category'
+    },
+
     description:{
         type: String,
         required: true
+    },
+
+    available:{
+        type: Boolean,
+        default: true
     },
 
     period:{
@@ -26,17 +36,6 @@ const AdSchema = mongoose.Schema({
     provider:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
-    },
-
-    category:{
-        type: String,
-        enum: [
-            'Saúde',
-            'Eventos',
-            'Informática',
-            'Manutenção',
-            'Serviços domésticos'
-        ]
     },
 
     city:{
