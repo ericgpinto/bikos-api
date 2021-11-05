@@ -45,6 +45,8 @@ module.exports = {
         const count = await Ad.estimatedDocumentCount()
         console.log(count)
 
+        res.header('X-Total-Count', count);
+
         const ads = await Ad.find()
                     .populate('announcer')
                     .populate({
