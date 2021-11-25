@@ -23,7 +23,6 @@ module.exports = {
 
 
         const category = await Category.findOne({ categoryId})
-        console.log(category)
 
         const ad = await Ad.create({
             category,
@@ -59,5 +58,28 @@ module.exports = {
                     .where('available').equals(true)
 
         return res.send(ads)
+    },
+
+    findById: async(req, res) => {
+        const {userId} = req.params;
+
+        try {
+            const ads = await Ad.find()
+                    .where('announcer').equals(userId)
+                    .populate('announcer')
+                    .populate({
+                        path:'category',
+                        populate: {
+                            path:'actionArea',
+                            model:'ActionArea'
+                        }
+                    })
+            
+            return res.send(ads)
+                                
+        } catch (error) {
+            return res.status(500).send({ message: 'Failed to load ads' });
+        }
+
     }
 }

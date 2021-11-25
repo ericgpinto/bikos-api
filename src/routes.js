@@ -13,7 +13,8 @@ router.post('/login', AuthController.login);
 
 //register of
 router.post('/ads/new/:userId', middleware, AdController.create)
-router.get('/ads/feed', AdController.find)
+router.get('/ads/:userId', middleware, AdController.findById)
+router.get('/ads/feed', middleware, AdController.find)
 
 router.post('/candidates/ads/:adsId/apply/:userId', middleware, ApplicantController.apply)
 router.get('/candidates/ads/:adsId', middleware, ApplicantController.index)
