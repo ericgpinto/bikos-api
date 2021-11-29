@@ -38,6 +38,11 @@ const AdSchema = mongoose.Schema({
         ref: 'User'
     },
 
+    applicants:{
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: 'Applicant'
+    },
+
     city:{
         type: String,
         required: true

@@ -48,6 +48,14 @@ module.exports = {
 
         const ads = await Ad.find()
                     .populate('announcer')
+                    .populate('provider')
+                    .populate({
+                        path:'applicants',
+                        populate: {
+                            path:'user',
+                            model:'User'
+                        }
+                    })
                     .populate({
                         path:'category',
                         populate: {
@@ -81,5 +89,36 @@ module.exports = {
             return res.status(500).send({ message: 'Failed to load ads' });
         }
 
+    },
+
+    getApplicants: async(req, res) => {
+        const { adsId } = req.params;
+
+        const applicants = await Ad.find()
+        .populate({
+            path:'applicants',
+            populate: {
+                path:'user',
+                model:'User'
+            }
+        })
+        .where('_id').equals(adsId)
+
+        return res.send(applicants)
+
+    },
+
+    selectCandidate: async(req, res) => {
+        const { adsId, userId } = req.params;
+
+        const provider = await User.findOne({ _id: userId })
+
+        const filter = { '_id': adsId }
+        const update = { 'provider': provider, 'available': false }
+
+        const query = await Ad.findOneAndUpdate(filter, update);
+        console.log(query)
+
+        return res.status(204).send()
     }
 }

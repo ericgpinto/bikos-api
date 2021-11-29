@@ -7,15 +7,20 @@ const middleware = require('./middlewares/auth');
 
 const router = express.Router();
 
+router.get('/ads/:adsId/candidates', middleware, AdController.getApplicants)
+
 router.get('/users/:userId', middleware, UserController.findById)
 router.post('/users/register', UserController.register);
 router.post('/login', AuthController.login);
 
-//register of
-router.post('/ads/new/:userId', middleware, AdController.create)
+router.get('/ads/feed', AdController.find)
 router.get('/ads/:userId', middleware, AdController.findById)
-router.get('/ads/feed', middleware, AdController.find)
 
-router.post('/candidates/ads/:adsId/apply/:userId', middleware, ApplicantController.apply)
-router.get('/candidates/ads/:adsId', middleware, ApplicantController.index)
+router.post('/ads/new/:userId', middleware, AdController.create)
+
+router.post('/ads/:adsId/candidates/:userId/apply', middleware, ApplicantController.apply)
+router.put('/ads/:adsId/candidates/:userId/select', middleware, AdController.selectCandidate)
+
+
+// router.get('/ads/:adsId/candidates/', middleware, ApplicantController.index)
 module.exports = router

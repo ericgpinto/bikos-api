@@ -12,23 +12,17 @@ module.exports = {
        } = req.params;
 
        const ad = await Ad.findOne({ _id: adsId })
-       const provider = await User.findOne({ _id: userId })
+       const user = await User.findOne({ _id: userId })
 
-        const query = await Applicant.create({
-            ad,
-            provider,
+       const applicant = await Applicant.create({
+        user            
         })
 
-        return res.status(201).send(query)
-    },
-
-    async index(req, res){
-        const {adsId} = req.params;
-
-        const applicants = await Applicant.find()
-        .where('ad').equals(adsId)
-        .populate('provider')
-
-        return res.json(applicants)
+       const applicants = await Ad.updateOne(
+           { _id: ad },
+           { $push: { 'applicants' : applicant }}
+       )
+       
+        return res.status(201).send()
     }
 }

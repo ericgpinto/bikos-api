@@ -3,12 +3,7 @@ const { Schema } = require('mongoose');
 
 const ApplicantSchema = mongoose.Schema({
 
-    ad:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Ad'
-    },
-
-    provider:{
+    user:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
